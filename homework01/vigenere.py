@@ -8,8 +8,37 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
     'LXFOPVEFRNHR'
     """
+    
     ciphertext = ""
-    # PUT YOUR CODE HERE
+
+    key_index = 0
+
+    for letter in plaintext:
+        if letter.islower():
+            
+            key_char = keyword[key_index % len(keyword)]
+            shift = ord(key_char.lower()) - ord("a")
+            
+            alfab_position = ord(letter) - ord("a")
+            coding = (alfab_position + shift) % 26 + ord("a")
+            ciphertext += chr(coding)
+            
+            key_index += 1
+
+        elif letter.isupper():
+            
+            key_char = keyword[key_index % len(keyword)]
+            shift = ord(key_char.upper()) - ord("A")
+
+            alfab_position = ord(letter) - ord("A")
+            coding = (alfab_position + shift) % 26 + ord("A")
+            ciphertext += chr(coding)
+
+            key_index += 1
+
+        else:
+            ciphertext += letter
+
     return ciphertext
 
 
@@ -24,5 +53,34 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    # PUT YOUR CODE HERE
+
+    key_index = 0
+
+    for letter in ciphertext:
+        if letter.islower():
+            
+            key_char = keyword[key_index % len(keyword)]
+            shift = ord(key_char.lower()) - ord("a")
+            
+            current_position = ord(letter) - ord("a")
+            uncoding = (current_position - shift) % 26 + ord("a")
+            plaintext += chr(uncoding)
+            
+            key_index += 1
+
+        elif letter.isupper():
+            
+            key_char = keyword[key_index % len(keyword)]
+            shift = ord(key_char.upper()) - ord("A")
+
+            current_position = ord(letter) - ord("A")
+            uncoding = (current_position - shift) % 26 + ord("A")
+            plaintext += chr(uncoding)
+
+            key_index += 1
+
+        else:
+            plaintext += letter
+
+
     return plaintext
